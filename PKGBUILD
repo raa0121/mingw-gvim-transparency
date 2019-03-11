@@ -70,4 +70,5 @@ package() {
         install -Dm 755 src/gvim.exe $pkgdir$MINGW_PREFIX/bin/gvim.exe
         make -f $srcdir/Makefile SRCDIR=$srcdir/$_pkgname-$pkgver DISTDIR=$pkgdir$MINGW_PREFIX/share/$_pkgname install
         install -Dm 644 runtime/doc/uganda.txt "${pkgdir}${MINGW_PREFIX}"/share/licenses/${pkgname}/license.txt
+        install -Dm 644 runtime/rgb.txt "${pkgdir}${MINGW_PREFIX}"/share/$_pkgname/runtime
 }
