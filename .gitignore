@@ -1,0 +1,6 @@
+pkg/
+src/
+*.swp
+*.tar.gz
+*.tar.xz
+*.diff
