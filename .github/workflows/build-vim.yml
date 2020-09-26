@@ -32,4 +32,4 @@ jobs:
 
       - name: build
         shell: msys2 {0}
-        run: makepkg -s
+        run: makepkg -s --noconfirm
