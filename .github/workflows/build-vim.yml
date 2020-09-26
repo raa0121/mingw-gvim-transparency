@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    rans-on: windows-latest
+    runs-on: windows-latest
 
     strategy:
       matrix:
