@@ -1,0 +1,35 @@
+name: Build Vim
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  build:
+    rans-on: windows-latest
+
+    strategy:
+      matrix:
+        arch: x64
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: msys2/setup-msys2@v2
+        with:
+          update: true
+          install: mingw-w64-x86_64-toolchain base-devel
+          msystem: MINGW64
+          path-type: inherit
+
+      - name: Update Vim
+        shell: msys2 {0}
+        run: update-version.sh
+
+      - name: build
+        shell: msys2 {0}
+        run: makepkg -s
