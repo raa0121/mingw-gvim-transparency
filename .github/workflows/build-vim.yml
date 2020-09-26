@@ -28,7 +28,7 @@ jobs:
 
       - name: Update Vim
         shell: msys2 {0}
-        run: update-version.sh
+        run: ./update-version.sh
 
       - name: build
         shell: msys2 {0}
