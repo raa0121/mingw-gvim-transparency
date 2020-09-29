@@ -8,28 +8,122 @@ on:
   schedule:
     - cron: '0 0 * * *'
 
+env:
+  PACKAGE_NAME: gvim-transparencry
+
 jobs:
   build:
     runs-on: windows-latest
 
     strategy:
       matrix:
-        arch: [x64]
+        arch: [x86, x64]
+        include:
+          - arch: x86
+            varch: i686
+            msystem: MINGW32
+          - arch: x64
+            varch: x86_64
+            msystem: MINGW64
 
     steps:
-      - uses: actions/checkout@v2
+    - uses: actions/checkout@v2
 
-      - uses: msys2/setup-msys2@v2
-        with:
-          update: true
-          install: mingw-w64-x86_64-toolchain base-devel
-          msystem: MINGW64
-          path-type: inherit
+    - uses: msys2/setup-msys2@v2
+      with:
+        update: true
+        install: mingw-w64-${{ matrix.varch }}-toolchain base-devel
+        msystem: ${{ matrix.msystem }}
+        path-type: inherit
 
-      - name: Update Vim
-        shell: msys2 {0}
-        run: ./update-version.sh
+    - name: Update Vim
+      id: update
+      shell: msys2 {0}
+      run: |
+        ./update-version.sh
+        if git diff --quiet HEAD PKGBUILD; then
+          echo "::set-output name=skip::yes"
+        else
+          echo "::set-output name=skip::no"
+        fi
 
-      - name: build
-        shell: msys2 {0}
-        run: makepkg -s --noconfirm
+    - name: Build
+      if: steps.update.outputs.skip == 'no'
+      shell: msys2 {0}
+      run: makepkg -s --noconfirm
+
+    - name: Upload Artifact
+      if: steps.update.outputs.skip == 'no'
+      uses: actions/upload-artifact@v1
+      with:
+        name: mingw-${PACKAGE_NAME}-${{ matrix.varch }}-${{ steps.update.outputs.version }}-1
+        path: ./mingw-w64-${{ matrix.varch }}-${PACKAGE_NAME}-${{ steps.update.outputs.version }}-*.tar.*
+
+  release:
+    runs-on: windows-latest
+
+    strategy:
+      matrix:
+        arch: [x64]
+        include:
+          - arch: x64
+            varch: x86_64
+            msystem: MINGW64
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: msys2/setup-msys2@v2
+      with:
+        update: true
+        install: mingw-w64-${{ matrix.varch }}-toolchain base-devel
+        msystem: ${{ matrix.msystem }}
+        path-type: inherit
+
+    - name: Update Vim
+      id: update
+      shell: msys2 {0}
+      run: |
+        ./update-version.sh
+        if git diff --quiet HEAD PKGBUILD; then
+          echo "::set-output name=skip::yes"
+        else
+          echo "::set-output name=skip::no"
+        fi
+
+    - name: Commit/Push git
+      id: commit
+      if: steps.update.outputs.skip == 'no'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      shell: msys2 {0}
+      run: |
+        git config --local user.name "mingw-gvim-transparency CI"
+        git config --local user.email "raa0121@users.noreply.github.com"
+        git remote set-url origin https://raa0121:${GITHUB_TOKEN}@github.com/beet-aizu/github_actions.git
+        git checkout -b master
+        git add PKGBUILD
+        grep pkgver PKGBUILD | sed -e 's/pkgver=//' | echo "::set-output name=version::{}"
+        git commit -m "update v${{ steps.update.outputs.version }}-1"
+        git push origin master
+        git tag v${{ steps.update.outputs.version }}-1
+        git push origin v${{ steps.update.outputs.version }}-1
+
+    - name: Download Artifact
+      if: steps.update.outputs.skip == 'no'
+      uses: actions/download-artifact@v1
+      with:
+        name: ${PACKAGE_NAME}
+
+    - name: Create Release
+      if: steps.update.outputs.skip == 'no'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: actions/create-release@v1.0.0
+      with:
+        tag_name: ${{ steps.update.outputs.version }}-1
+        release_name: ${{ steps.update.outputs.version }}-1
+        draft: false
+        prerelease: false
+        files: |
+          ./${PACKAGE_NAME}/mingw-w64-${{ matrix.varch }}-${PACKAGE_NAME}-${{ steps.update.outputs.version }}-*.tar.*
