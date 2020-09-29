@@ -60,7 +60,7 @@ jobs:
 
     - name: Upload Artifact
       if: steps.update.outputs.skip == 'no'
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v2
       with:
         name: gvim-transparency-${{ matrix.varch }}
         path: ./mingw-*.pkg.tar.zst
