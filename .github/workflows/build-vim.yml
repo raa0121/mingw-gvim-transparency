@@ -61,6 +61,7 @@ jobs:
 
   release:
     runs-on: windows-latest
+    needs: [build]
 
     strategy:
       matrix:
