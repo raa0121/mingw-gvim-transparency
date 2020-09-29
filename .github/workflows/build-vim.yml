@@ -48,7 +48,8 @@ jobs:
         ./update-version.sh
         if git diff --quiet HEAD PKGBUILD; then
           echo "::set-output name=skip::yes"
-          grep pkgver PKGBUILD | sed -e 's/pkgver=//' | echo "::set-output name=version::{}"
+          pkgver=$(grep pkgver PKGBUILD | sed -e 's/pkgver=//')
+          echo "::set-output name=version::$pkgver"
         else
           echo "::set-output name=skip::no"
         fi
@@ -115,7 +116,8 @@ jobs:
         git remote set-url origin https://raa0121:${GITHUB_TOKEN}@github.com/beet-aizu/github_actions.git
         git checkout -b master
         git add PKGBUILD
-        grep pkgver PKGBUILD | sed -e 's/pkgver=//' | echo "::set-output name=version::{}"
+        pkgver=$(grep pkgver PKGBUILD | sed -e 's/pkgver=//')
+        echo "::set-output name=version::$pkgver"
         git commit -m "update v${{ steps.update.outputs.version }}-1"
         git push origin master
         git tag v${{ steps.update.outputs.version }}-1
