@@ -63,7 +63,7 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: gvim-transparency-${{ matrix.varch }}
-        path: ./mingw-w64-${{ matrix.varch }}-gvim-transparency-*.tar.*
+        path: ./mingw-*.pkg.tar.zst
 
   release:
     runs-on: windows-latest
