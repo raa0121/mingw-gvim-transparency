@@ -48,6 +48,7 @@ jobs:
         ./update-version.sh
         if git diff --quiet HEAD PKGBUILD; then
           echo "::set-output name=skip::yes"
+          grep pkgver PKGBUILD | sed -e 's/pkgver=//' | echo "::set-output name=version::{}"
         else
           echo "::set-output name=skip::no"
         fi
