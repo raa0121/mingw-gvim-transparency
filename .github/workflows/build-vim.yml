@@ -54,7 +54,9 @@ jobs:
     - name: Build
       if: steps.update.outputs.skip == 'no'
       shell: msys2 {0}
-      run: makepkg -s --noconfirm
+      run: |
+        makepkg -s --noconfirm
+        ls -l
 
     - name: Upload Artifact
       if: steps.update.outputs.skip == 'no'
