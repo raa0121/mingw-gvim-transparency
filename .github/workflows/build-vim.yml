@@ -114,7 +114,7 @@ jobs:
         git add PKGBUILD
         pkgver=$(grep pkgver= PKGBUILD | sed -e 's/pkgver=//')
         echo "::set-output name=version::$pkgver"
-        git commit -m "commit v${{ steps.update.outputs.version }}-1"
+        git commit -m "commit v${version}-1"
         git push origin master
         git tag v${{ steps.commit.outputs.version }}-1
         git push origin v${{ steps.commit.outputs.version }}-1
