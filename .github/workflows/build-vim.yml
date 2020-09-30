@@ -127,7 +127,7 @@ jobs:
 
     - name: Download Artifact (i686)
       if: steps.update.outputs.skip == 'no'
-      uses: actions/download-artifact@v1
+      uses: actions/download-artifact@v2
       with:
         name: gvim-transparency-i686
 
@@ -138,9 +138,9 @@ jobs:
       uses: softprops/action-gh-release@9993ae8
       with:
         tag_name: ${{ steps.commit.outputs.version }}-1
-        release_name: ${{ steps.commit.outputs.version }}-1
+        name: ${{ steps.commit.outputs.version }}-1
         draft: false
         prerelease: false
         files: |
-          ./gvim-transparency-x86_64/mingw-w64-x86_64-gvim-transparency*.tar.*
-          ./gvim-transparency-i686/mingw-w64-i686-gvim-transparency*.tar.*
+          ./mingw-w64-x86_64-gvim-transparency*.tar.*
+          ./mingw-w64-i686-gvim-transparency*.tar.*
