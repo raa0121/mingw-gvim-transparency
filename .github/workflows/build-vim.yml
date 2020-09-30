@@ -110,14 +110,14 @@ jobs:
       run: |
         git config --local user.name "mingw-gvim-transparency CI"
         git config --local user.email "raa0121@users.noreply.github.com"
-        git remote set-url origin https://raa0121:${GITHUB_TOKEN}@github.com/beet-aizu/github_actions.git
+        git remote set-url origin https://raa0121:${GITHUB_TOKEN}@github.com/raa0121/mingw-gvim-transparency.git
         git add PKGBUILD
         pkgver=$(grep pkgver= PKGBUILD | sed -e 's/pkgver=//')
         echo "::set-output name=version::$pkgver"
-        git commit -m "update v${{ steps.update.outputs.version }}-1"
+        git commit -m "commit v${{ steps.update.outputs.version }}-1"
         git push origin master
-        git tag v${{ steps.update.outputs.version }}-1
-        git push origin v${{ steps.update.outputs.version }}-1
+        git tag v${{ steps.commit.outputs.version }}-1
+        git push origin v${{ steps.commit.outputs.version }}-1
 
     - name: Download Artifact (x86_64)
       if: steps.update.outputs.skip == 'no'
@@ -137,8 +137,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       uses: softprops/action-gh-release@9993ae8
       with:
-        tag_name: ${{ steps.update.outputs.version }}-1
-        release_name: ${{ steps.update.outputs.version }}-1
+        tag_name: ${{ steps.commit.outputs.version }}-1
+        release_name: ${{ steps.commit.outputs.version }}-1
         draft: false
         prerelease: false
         files: |
