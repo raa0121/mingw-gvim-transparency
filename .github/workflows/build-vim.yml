@@ -116,8 +116,8 @@ jobs:
         echo "::set-output name=version::$pkgver"
         git commit -m "v${pkgver}-1"
         git push origin master
-        git tag v${{ steps.commit.outputs.version }}-1
-        git push origin v${{ steps.commit.outputs.version }}-1
+        git tag v${pkgver}-1
+        git push origin v${pkgver}-1
 
     - name: Download Artifact (x86_64)
       if: steps.update.outputs.skip == 'no'
