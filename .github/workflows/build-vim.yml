@@ -151,4 +151,5 @@ jobs:
         files: |
           ./mingw-w64-x86_64-gvim-transparency*.tar.*
           ./mingw-w64-i686-gvim-transparency*.tar.*
-          ./mingw-gvim-transparency.db.tar.gz
+          ./mingw-gvim-transparency.db
+          ./mingw-gvim-transparency.files
