@@ -135,7 +135,7 @@ jobs:
       if: steps.update.outputs.skip == 'no'
       shell: msys2 {0}
       run: |
-        repo-add mingw-gvim-transparency.db.tar.gz ./mingw-w64-*gvim-transparency*.tar.*
+        repo-add mingw-raa0121.db.tar.gz ./mingw-w64-*gvim-transparency*.tar.*
 
 
     - name: Create Release
@@ -151,5 +151,5 @@ jobs:
         files: |
           ./mingw-w64-x86_64-gvim-transparency*.tar.*
           ./mingw-w64-i686-gvim-transparency*.tar.*
-          ./mingw-gvim-transparency.db
-          ./mingw-gvim-transparency.files
+          ./mingw-raa0121.db
+          ./mingw-raa0121.files
