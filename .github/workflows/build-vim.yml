@@ -131,6 +131,13 @@ jobs:
       with:
         name: gvim-transparency-i686
 
+    - name: Create repo.db
+      if: steps.update.outputs.skip == 'no'
+      shell: msys2 {0}
+      run: |
+        repo-add mingw-gvim-transparency.db.tar.gz ./mingw-w64-*gvim-transparency*.tar.*
+
+
     - name: Create Release
       if: steps.update.outputs.skip == 'no'
       env:
@@ -144,3 +151,4 @@ jobs:
         files: |
           ./mingw-w64-x86_64-gvim-transparency*.tar.*
           ./mingw-w64-i686-gvim-transparency*.tar.*
+          ./mingw-gvim-transparency.db.tar.gz
