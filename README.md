@@ -6,6 +6,7 @@ This provides Vim packages for mingw32/mingw64. This Vim has +python3/dyn and +l
 The packages will be built at 0:00 UTC everyday.
 
 ## How to use
+### Install
 Add `/etc/pacman.conf`
 ```
 [mingw-raa0121]
@@ -19,6 +20,31 @@ pacman -Sy mingw-w64-i686-gvim-transparency
 or
 ```
 pacman -Sy mingw-w64-x86_64-gvim-transparency
+```
+
+### Setting
+Set your enviroment.
+
+#### msys2 bash
+```
+VIM=/mingw32/share/vim
+VIMRUNTIME=/mingw32/share/vim/runtime
+```
+or
+```
+VIM=/mingw64/share/vim
+VIMRUNTIME=/mingw64/share/vim/runtime
+```
+
+#### Windows native
+```
+VIM=C:\msys64\mingw32\share\vim
+VIMRUNTIME=C:\msys64\mingw32\share\vim\runtime
+```
+or
+```
+VIM=C:\msys64\mingw64\share\vim
+VIMRUNTIME=C:\msys64\mingw64\share\vim\runtime
 ```
 
 ## TODO
