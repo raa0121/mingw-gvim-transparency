@@ -45,7 +45,6 @@ build() {
         mingw32-make -f Make_ming.mak \
                 GUI=yes IME=yes MBYTE=yes ICONV=yes \
                 PYTHON3=$MINGW_PREFIX DYNAMIC_PYTHON3=yes PYTHON3_VER=38 \
-                PYTHON3_HOME=$MINGW_PREFIX/ \
                 PYTHON3INC=-I$MINGW_PREFIX/include/python3.8 \
                 DYNAMIC_PYTHON3_DLL=libpython3.8.dll \
                 LUA=$MINGW_PREFIX DYNAMIC_LUA=yes \
