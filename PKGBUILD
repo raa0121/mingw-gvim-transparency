@@ -20,11 +20,11 @@ options=()
 install=
 changelog=
 source=("https://github.com/vim/vim/archive/v$pkgver.tar.gz"
-        "https://gist.githubusercontent.com/k-takata/78f9b663bc82cd654b5b4be05b10831b/raw/4e8a44e02e59d21c4203843c526dd9855301cb59/2002-windows_transparency.diff"
+        "https://gist.githubusercontent.com/k-takata/78f9b663bc82cd654b5b4be05b10831b/raw/c8445729c049a352ffcd074bb32a66a630d949d8/2002-windows_transparency.diff"
         "Makefile")
 
 md5sums=('04294a4497f34aa9b11dbcb52ab15be9'
-         '292c41df147ae3dc4feffc82b9287b1c'
+         '8bff3205c77da12d122025404c714b89'
          '0c87e86d155b9272ee52979e5478fc37')
 
 noextract=()
