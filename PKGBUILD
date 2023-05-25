@@ -20,7 +20,7 @@ options=()
 install=
 changelog=
 source=("https://github.com/vim/vim/archive/v$pkgver.tar.gz"
-        "https://gist.github.com/raa0121/047191731d0b23057d870de0ae623f4e/raw/b68b8a1b0b10855b450e5ba16a68e740df559643/2002-windows_transparency.diff"
+        "2002-windows_transparency.diff"
         "Makefile")
 
 md5sums=('11a44b93e5d6301d32b44a32d2e798ca'
