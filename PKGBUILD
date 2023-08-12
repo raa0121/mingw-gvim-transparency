@@ -45,8 +45,8 @@ build() {
         mingw32-make -f Make_ming.mak \
                 GUI=yes IME=yes MBYTE=yes ICONV=yes \
                 PYTHON3=$MINGW_PREFIX DYNAMIC_PYTHON3=yes PYTHON3_VER=310 \
-                PYTHON3INC=-I$MINGW_PREFIX/include/python3.10 \
-                DYNAMIC_PYTHON3_DLL=libpython3.10.dll \
+                PYTHON3INC=-I$MINGW_PREFIX/include/python3.11 \
+                DYNAMIC_PYTHON3_DLL=libpython3.11.dll \
                 LUA=$MINGW_PREFIX DYNAMIC_LUA=yes \
                 CSCOPE=yes NETBEANS=yes ARCH=$TARGET_ARCH DIRECTX=yes \
                 STATIC_STDCPLUS=yes DEBUG=no TERMINAL=yes \
