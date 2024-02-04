@@ -141,10 +141,10 @@ diff --git a/src/proto/gui_w32.pro b/src/proto/gui_w32.pro
 diff --git a/src/proto/optionstr.pro b/src/proto/optionstr.pro
 --- a/src/proto/optionstr.pro
 +++ b/src/proto/optionstr.pro
-@@ -108,6 +108,7 @@ char *did_set_termwintype(optset_T *args);
- char *did_set_titlestring(optset_T *args);
- char *did_set_toolbar(optset_T *args);
+@@ -169,6 +169,7 @@ char *did_set_toolbar(optset_T *args);
+ int expand_set_toolbar(optexpand_T *args, int *numMatches, char_u ***matches);
  char *did_set_toolbariconsize(optset_T *args);
+ int expand_set_toolbariconsize(optexpand_T *args, int *numMatches, char_u ***matches);
 +char *did_set_transparency(optset_T *args);
  char *did_set_ttymouse(optset_T *args);
  char *did_set_varsofttabstop(optset_T *args);
