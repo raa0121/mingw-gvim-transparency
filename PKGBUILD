@@ -1,6 +1,6 @@
 # Maintainer: raa0121 <raa0121@gmail.com>
 pkgname="${MINGW_PACKAGE_PREFIX}-gvim-transparency"
-pkgver=9.1.0252
+pkgver=9.1.0258
 pkgrel=1
 pkgdesc="Vi Improved, a highly configurable, improved version of the vi text editor."
 arch=('any')
@@ -23,7 +23,7 @@ source=("https://github.com/vim/vim/archive/v$pkgver.tar.gz"
         "2002-windows_transparency.diff"
         "Makefile")
 
-md5sums=('cc9e98d1e3da3c43c91b58cd5316cb3a'
+md5sums=('c1ee3cb10fd6b3d2507d43127b24abb6'
          '07f40405aee91fb4485fbe7318ffc96a'
          '0c87e86d155b9272ee52979e5478fc37')
 
