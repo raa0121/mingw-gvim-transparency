@@ -118,7 +118,7 @@ jobs:
         git remote set-url origin https://raa0121:${GITHUB_TOKEN}@github.com/raa0121/mingw-gvim-transparency.git
         git add PKGBUILD
         pkgver=$(grep pkgver= PKGBUILD | sed -e 's/pkgver=//')
-        echo "version=$pkgver" >> $GITHU_OUTPUT
+        echo "version=$pkgver" >> $GITHUB_OUTPUT
         git commit -m "v${pkgver}-1"
         git push origin master
         git tag ${pkgver}-1
