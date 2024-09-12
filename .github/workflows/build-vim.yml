@@ -44,9 +44,9 @@ jobs:
       run: |
         ./update-version.sh
         if git diff --quiet HEAD PKGBUILD; then
-          echo "::set-output name=skip::yes"
+          echo "skip=yes" >> $GITHUB_OUTPUT
         else
-          echo "::set-output name=skip::no"
+          echo "skip=no" >> $GITHUB_OUTPUT
         fi
 
     - name: Build
@@ -152,9 +152,10 @@ jobs:
       uses: actions/create-release@master
       with:
         tag_name: ${{ steps.commit.outputs.version }}-1
-        relase_name: ${{ steps.commit.outputs.version }}-1
+        release_name: ${{ steps.commit.outputs.version }}-1
 
     - name: Upload
+      if: steps.update.outputs.skip == 'no'
       run: go run github.com/tcnksm/ghr@latest "v${{ steps.commit.outputs.version }}-1" pkg
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
