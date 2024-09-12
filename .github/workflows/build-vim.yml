@@ -156,6 +156,6 @@ jobs:
 
     - name: Upload
       if: steps.update.outputs.skip == 'no'
-      run: go run github.com/tcnksm/ghr@latest "v${{ steps.commit.outputs.version }}-1" pkg
+      run: go run github.com/tcnksm/ghr@latest "${{ steps.commit.outputs.version }}-1" pkg
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
