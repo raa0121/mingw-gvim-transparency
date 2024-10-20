@@ -152,11 +152,11 @@ diff --git a/src/proto/optionstr.pro b/src/proto/optionstr.pro
 diff --git a/src/testdir/gen_opt_test.vim b/src/testdir/gen_opt_test.vim
 --- a/src/testdir/gen_opt_test.vim
 +++ b/src/testdir/gen_opt_test.vim
-@@ -148,6 +148,7 @@ let test_values = {
-       \ 'termwintype': [['', 'winpty', 'conpty'], ['xxx']],
-       \ 'toolbar': [['', 'icons', 'text'], ['xxx']],
-       \ 'toolbariconsize': [['', 'tiny', 'huge'], ['xxx']],
+@@ -260,6 +260,7 @@ let test_values = {
+       \ 'toolbariconsize': [['', 'tiny', 'small', 'medium', 'large', 'huge',
+       \		'giant'],
+       \		['xxx']],
 +      \ 'transparency': [['0', '128', '255'], ['xxx']],
        \ 'ttymouse': [['', 'xterm'], ['xxx']],
-       \ 'ttytype': [[], []],
-       \ 'varsofttabstop': [['8', '4,8,16,32'], ['xxx', '-1', '4,-1,20']],
+       \ 'varsofttabstop': [['8', '4,8,16,32'], ['xxx', '-1', '4,-1,20', '1,']],
+       \ 'vartabstop': [['8', '4,8,16,32'], ['xxx', '-1', '4,-1,20', '1,']],
