@@ -9,7 +9,7 @@ license=('vim')
 groups=('edior')
 depends=("${MINGW_PACKAGE_PREFIX}-python3"
          "${MINGW_PACKAGE_PREFIX}-lua")
-makedepends=("patch" "${MINGW_PACKAGE_PREFIX}-make")
+makedepends=("patch" "${MINGW_PACKAGE_PREFIX}-make" "${MINGW_PREFIX}-pkgconfig")
 checkdepends=()
 optdepends=()
 provides=()
@@ -41,11 +41,12 @@ build() {
         cd "$_pkgname-$pkgver/src"
         [ "$MINGW_PREFIX" == "/mingw64" ] && MINGW_ARCH=64 TARGET_ARCH="x86-64" || MINGW_ARCH=32 TARGET_ARCH="i686"
         export PATH=$MINGW_PREFIX/bin:$PATH
+        python_ver=$(pkgconf --modversion python3)
         mingw32-make -f Make_ming.mak \
                 GUI=yes IME=yes MBYTE=yes ICONV=yes \
-                PYTHON3=$MINGW_PREFIX DYNAMIC_PYTHON3=yes PYTHON3_VER=310 \
-                PYTHON3INC=-I$MINGW_PREFIX/include/python3.11 \
-                DYNAMIC_PYTHON3_DLL=libpython3.11.dll \
+                PYTHON3=$MINGW_PREFIX DYNAMIC_PYTHON3=yes PYTHON3_VER=$(echo $python_ver | tr -d .) \
+                PYTHON3INC=$(pkgconf --cflags python3) \
+                DYNAMIC_PYTHON3_DLL=libpython${python_ver}.dll \
                 LUA=$MINGW_PREFIX DYNAMIC_LUA=yes \
                 CSCOPE=yes NETBEANS=yes ARCH=$TARGET_ARCH DIRECTX=yes \
                 STATIC_STDCPLUS=yes DEBUG=no TERMINAL=yes \
