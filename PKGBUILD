@@ -9,7 +9,7 @@ license=('vim')
 groups=('edior')
 depends=("${MINGW_PACKAGE_PREFIX}-python3"
          "${MINGW_PACKAGE_PREFIX}-lua")
-makedepends=("patch" "${MINGW_PACKAGE_PREFIX}-make" "${MINGW_PREFIX}-pkgconfig")
+makedepends=("patch" "${MINGW_PACKAGE_PREFIX}-make" "${MINGW_PACKAGE_PREFIX}-pkgconfig")
 checkdepends=()
 optdepends=()
 provides=()
