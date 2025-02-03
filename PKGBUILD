@@ -26,11 +26,12 @@ md5sums=('195078f93fc2f7b80cccfaefbcbc7656'
          '1076c0dd5c9cf8f1a916c5bd6c3602dc'
          '0c87e86d155b9272ee52979e5478fc37')
 
-noextract=()
+noextract=("v$pkgver.tar.gz")
 validpgpkeys=()
 _pkgname=vim
 
 prepare() {
+        bsdtar -xf v$pkgver.tar.gz || bsdtar -xf v$pkgver.tar.gz
         cd "$_pkgname-$pkgver"
         patch -p1 -i "$srcdir/2002-windows_transparency.diff"
         sed -i 's|^.*\(#define SYS_.*VIMRC_FILE.*"\) .*$|\1|' src/feature.h
