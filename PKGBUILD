@@ -1,6 +1,6 @@
 # Maintainer: raa0121 <raa0121@gmail.com>
 pkgname="${MINGW_PACKAGE_PREFIX}-gvim-transparency"
-pkgver=9.1.1518
+pkgver=9.2.0014
 pkgrel=1
 pkgdesc="Vi Improved, a highly configurable, improved version of the vi text editor."
 arch=('any')
@@ -20,10 +20,10 @@ options=()
 install=
 changelog=
 source=("https://github.com/vim/vim/archive/v$pkgver.tar.gz"
-        "2002-windows_transparency.diff"
+        "https://github.com/koron/vim-kaoriya-patches/raw/refs/heads/master/master/2020-windows_transparency.diff"
         "Makefile")
-md5sums=('ab75fa316c45e5b5936e3c79153cb07e'
-         '1076c0dd5c9cf8f1a916c5bd6c3602dc'
+md5sums=('bf25fc61905e7ba667b3b8ae65d84cbc'
+         '919fb335b9a990940bf18fde394fea7c'
          '0c87e86d155b9272ee52979e5478fc37')
 
 noextract=("v$pkgver.tar.gz")
@@ -33,7 +33,7 @@ _pkgname=vim
 prepare() {
         bsdtar -xf v$pkgver.tar.gz || bsdtar -xf v$pkgver.tar.gz
         cd "$_pkgname-$pkgver"
-        patch -p1 -i "$srcdir/2002-windows_transparency.diff"
+        patch -p1 -i "$srcdir/2020-windows_transparency.diff"
         sed -i 's|^.*\(#define SYS_.*VIMRC_FILE.*"\) .*$|\1|' src/feature.h
         sed -i 's|^.*\(#define VIMRC_FILE.*"\) .*$|\1|' src/feature.h
 }
