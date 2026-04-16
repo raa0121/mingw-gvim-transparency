@@ -1,6 +1,6 @@
 # Maintainer: raa0121 <raa0121@gmail.com>
 pkgname="${MINGW_PACKAGE_PREFIX}-gvim-transparency"
-pkgver=9.2.0350
+pkgver=9.2.0357
 pkgrel=1
 pkgdesc="Vi Improved, a highly configurable, improved version of the vi text editor."
 arch=('any')
@@ -22,7 +22,7 @@ changelog=
 source=("https://github.com/vim/vim/archive/v$pkgver.tar.gz"
         "https://github.com/koron/vim-kaoriya-patches/raw/refs/heads/master/master/2020-windows_transparency.diff"
         "Makefile")
-md5sums=('461a5e86243f1063d7b4bb7e30beed38'
+md5sums=('d9d3b77e1a85c9b8172b50b58584e2d4'
          'a12947099d5b4e3255fe78409d3bb3f5'
          '0c87e86d155b9272ee52979e5478fc37')
 
