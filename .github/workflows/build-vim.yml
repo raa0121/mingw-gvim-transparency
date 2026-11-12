@@ -14,11 +14,8 @@ jobs:
 
     strategy:
       matrix:
-        arch: [x86, x64]
+        arch: [x64]
         include:
-          - arch: x86
-            varch: i686
-            msystem: MINGW32
           - arch: x64
             varch: x86_64
             msystem: MINGW64
@@ -128,13 +125,6 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: gvim-transparency-x86_64
-        path: pkg
-
-    - name: Download Artifact (i686)
-      if: steps.update.outputs.skip == 'no'
-      uses: actions/download-artifact@v4
-      with:
-        name: gvim-transparency-i686
         path: pkg
 
     - name: Create repo.db
