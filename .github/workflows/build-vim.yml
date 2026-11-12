@@ -41,13 +41,9 @@ jobs:
     - name: Update Vim
       id: update
       shell: msys2 {0}
-      run: |
-        ./update-version.sh
-        if git diff --quiet HEAD PKGBUILD; then
-          echo "skip=yes" >> $GITHUB_OUTPUT
-        else
-          echo "skip=no" >> $GITHUB_OUTPUT
-        fi
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: ./check-release.sh
 
     - name: Build
       if: steps.update.outputs.skip == 'no'
@@ -64,6 +60,8 @@ jobs:
         path: ./mingw-*.pkg.tar.zst
 
   release:
+    # A PR that bumps PKGBUILD would otherwise be released and pushed to master.
+    if: github.event_name != 'pull_request'
     runs-on: windows-latest
     needs: [build]
 
@@ -98,31 +96,32 @@ jobs:
     - name: Update Vim
       id: update
       shell: msys2 {0}
-      run: |
-        ./update-version.sh
-        if git diff --quiet HEAD PKGBUILD; then
-          echo "skip=yes" >> $GITHUB_OUTPUT
-        else
-          echo "skip=no" >> $GITHUB_OUTPUT
-        fi
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: ./check-release.sh
 
     - name: Commit/Push git
-      id: commit
       if: steps.update.outputs.skip == 'no'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        VERSION: ${{ steps.update.outputs.version }}
+        CHANGED: ${{ steps.update.outputs.changed }}
       shell: msys2 {0}
       run: |
         git config --local user.name "mingw-gvim-transparency CI"
         git config --local user.email "raa0121@users.noreply.github.com"
         git remote set-url origin https://raa0121:${GITHUB_TOKEN}@github.com/raa0121/mingw-gvim-transparency.git
-        git add PKGBUILD
-        pkgver=$(grep pkgver= PKGBUILD | sed -e 's/pkgver=//')
-        echo "version=$pkgver" >> $GITHUB_OUTPUT
-        git commit -m "v${pkgver}-1"
-        git push origin master
-        git tag ${pkgver}-1
-        git push origin ${pkgver}-1
+        # PKGBUILD bumped by hand is already committed, so only the tag is missing.
+        if [ "$CHANGED" = yes ]; then
+          git add PKGBUILD
+          git commit -m "v${VERSION}"
+          git push origin master
+        fi
+        # The tag survives a run that failed after pushing it.
+        if ! git ls-remote --exit-code --tags origin "refs/tags/${VERSION}" > /dev/null; then
+          git tag "${VERSION}"
+          git push origin "${VERSION}"
+        fi
 
     - name: Download Artifact (x86_64)
       if: steps.update.outputs.skip == 'no'
@@ -151,11 +150,11 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       uses: actions/create-release@master
       with:
-        tag_name: ${{ steps.commit.outputs.version }}-1
-        release_name: ${{ steps.commit.outputs.version }}-1
+        tag_name: ${{ steps.update.outputs.version }}
+        release_name: ${{ steps.update.outputs.version }}
 
     - name: Upload
       if: steps.update.outputs.skip == 'no'
-      run: go run github.com/tcnksm/ghr@latest "${{ steps.commit.outputs.version }}-1" pkg
+      run: go run github.com/tcnksm/ghr@latest "${{ steps.update.outputs.version }}" pkg
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
