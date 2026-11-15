@@ -1,7 +1,7 @@
 # Maintainer: raa0121 <raa0121@gmail.com>
 pkgname="${MINGW_PACKAGE_PREFIX}-gvim-transparency"
 pkgver=9.2.1345
-pkgrel=1
+pkgrel=2
 pkgdesc="Vi Improved, a highly configurable, improved version of the vi text editor."
 arch=('any')
 url="http://www.vim.org"
@@ -40,15 +40,24 @@ prepare() {
 
 build() {
         cd "$_pkgname-$pkgver/src"
-        [ "$MINGW_PREFIX" == "/mingw64" ] && MINGW_ARCH=64 TARGET_ARCH="x86-64" || MINGW_ARCH=32 TARGET_ARCH="i686"
+        # MINGW_PREFIX differs between MINGW64 and UCRT64, so look at CARCH.
+        [ "$CARCH" == "x86_64" ] && TARGET_ARCH="x86-64" || TARGET_ARCH="i686"
         export PATH=$MINGW_PREFIX/bin:$PATH
         python_ver=$(pkgconf --modversion python3)
-        mingw32-make -f Make_ming.mak \
+        # Make_ming.mak defaults to lua53.dll, which MSYS2 does not ship.
+        lua_ver=$(pkgconf --modversion lua | cut -d. -f1,2 | tr -d .)
+        # The libXpm.a bundled with Vim is built against msvcrt and fails to
+        # link with UCRT (undefined __iob_func), and MSYS2 has no libxpm.
+        xpm_opt=
+        case "$MINGW_PACKAGE_PREFIX" in
+                *ucrt*) xpm_opt="XPM=no" ;;
+        esac
+        mingw32-make -f Make_ming.mak $xpm_opt \
                 GUI=yes IME=yes MBYTE=yes ICONV=yes \
                 PYTHON3=$MINGW_PREFIX DYNAMIC_PYTHON3=yes PYTHON3_VER=$(echo $python_ver | tr -d .) \
                 PYTHON3INC=$(pkgconf --cflags python3) \
                 DYNAMIC_PYTHON3_DLL=libpython${python_ver}.dll \
-                LUA=$MINGW_PREFIX DYNAMIC_LUA=yes \
+                LUA=$MINGW_PREFIX DYNAMIC_LUA=yes LUA_VER=$lua_ver \
                 CSCOPE=yes NETBEANS=yes ARCH=$TARGET_ARCH DIRECTX=yes \
                 STATIC_STDCPLUS=yes DEBUG=no TERMINAL=yes \
                 VIMRCLOC=$MINGW_PREFIX/etc VIMRUNTIMEDIR=$MINGW_PREFIX/share/$_pkgname/runtime

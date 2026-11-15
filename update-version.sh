@@ -18,6 +18,7 @@ then
   exit
 fi
 sed -i -e "s/pkgver=.*$/pkgver=${latest_version}/" ./PKGBUILD
+sed -i -e "s/^pkgrel=.*$/pkgrel=1/" ./PKGBUILD
 eval "$(makepkg -g 2>/dev/null | sed -e 's/md5sums/new_\0/')"
 for ((i = 0; i < ${#md5sums[@]}; i++)) {
   sed -i -e "s/${md5sums[$i]}/${new_md5sums[$i]}/" ./PKGBUILD

@@ -14,11 +14,14 @@ jobs:
 
     strategy:
       matrix:
-        arch: [x64]
+        arch: [x64, ucrt64]
         include:
           - arch: x64
             varch: x86_64
             msystem: MINGW64
+          - arch: ucrt64
+            varch: ucrt-x86_64
+            msystem: UCRT64
 
     steps:
     - name: Initalize
@@ -125,6 +128,13 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: gvim-transparency-x86_64
+        path: pkg
+
+    - name: Download Artifact (ucrt-x86_64)
+      if: steps.update.outputs.skip == 'no'
+      uses: actions/download-artifact@v4
+      with:
+        name: gvim-transparency-ucrt-x86_64
         path: pkg
 
     - name: Create repo.db

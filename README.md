@@ -1,7 +1,7 @@
 # mingw-gvim-transparency
 [![Build Vim](https://github.com/raa0121/mingw-gvim-transparency/workflows/Build%20Vim/badge.svg)](https://github.com/raa0121/mingw-gvim-transparency/actions)
 
-This provides Vim packages for mingw64. This Vim has +python3/dyn and +lua/dyn, iconv/dyn and [kaoriya's transparency patch](https://github.com/koron/vim-kaoriya-patches/blob/master/master/2020-windows_transparency.diff) enabled.
+This provides Vim packages for mingw64 and ucrt64. This Vim has +python3/dyn and +lua/dyn, iconv/dyn and [kaoriya's transparency patch](https://github.com/koron/vim-kaoriya-patches/blob/master/master/2020-windows_transparency.diff) enabled.
 
 The packages will be built at 0:00 UTC everyday.
 
@@ -19,6 +19,10 @@ SigLevel = Never
 ```
 pacman -Sy mingw-w64-x86_64-gvim-transparency
 ```
+or
+```
+pacman -Sy mingw-w64-ucrt-x86_64-gvim-transparency
+```
 
 ### Setting
 Set your enviroment.
@@ -28,11 +32,21 @@ Set your enviroment.
 VIM=/mingw64/share/vim
 VIMRUNTIME=/mingw64/share/vim/runtime
 ```
+or
+```
+VIM=/ucrt64/share/vim
+VIMRUNTIME=/ucrt64/share/vim/runtime
+```
 
 #### Windows native
 ```
 VIM=C:\msys64\mingw64\share\vim
 VIMRUNTIME=C:\msys64\mingw64\share\vim\runtime
+```
+or
+```
+VIM=C:\msys64\ucrt64\share\vim
+VIMRUNTIME=C:\msys64\ucrt64\share\vim\runtime
 ```
 
 ## TODO
