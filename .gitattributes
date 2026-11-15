@@ -1,0 +1,4 @@
+# makepkg and bash reject CRLF, so keep LF even where core.autocrlf=true.
+* text=auto eol=lf
+*.zst binary
+*.tar.gz binary
